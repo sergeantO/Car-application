@@ -14,8 +14,10 @@ new Vue({
     cars: cars,
     selectedCarIndex: 0,
     car: cars[0],
+    logs: [1],
     phoneVisibility: false,
-    search: ''
+    search: '',
+    modalVisability: false
   },
   methods: {
     selectCar(index) {
@@ -23,6 +25,12 @@ new Vue({
       this.car = cars[index]
       //resrt
       this.phoneVisibility = false
+    },
+    newOrder () {
+      this.modalVisability = false
+    },
+    cancelOrder () {
+      this.modalVisability = false
     }
   },
   computed : {
