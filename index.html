@@ -62,7 +62,9 @@
               
               <!-- Phone block -->
               <div class="phone-block">
-                <p v-if="phoneVisibility">8 (800) 555-35-35</p>
+                <transition name="phone">
+                  <p v-if="phoneVisibility">8 (800) 555-35-35</p>
+                </transition>
               </div>
       
               <!-- Buttons -->
@@ -105,63 +107,70 @@
             </div>
           </div>  
         </div>
+        <!-- END LOGS -->
       </div>
 
         
       </div>
 
     <!-- MODAL WINDOW -->
-    <div 
-      class="modal fade show" 
-      tabindex="-1" 
-      role="dialog"
-      v-if="modalVisability"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"> Do you want to by this car? </h5>
-            <button 
-              type="button" 
-              class="close" 
-              data-dismiss="modal" 
-              aria-label="Close"
-              @click="modalVisability = false"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <ul>
-                <li>Model - <strong>{{ car.name }} {{ car.model }}</strong></li>
-                <li>Year - <strong>{{ car.year }}</strong></li>
-                <li>Owner - <strong>{{ car.owner }}</strong></li>  
-              </ul>
-          </div>
-          <div class="modal-footer">
-            <button 
-              type="button" 
-              class="btn btn-primary"
-              @click="newOrder"
-            >
-              Buy
-            </button>
-            <button 
-              type="button" 
-              class="btn btn-secondary" 
-              data-dismiss="modal"
-              @click="cancelOrder"
-            >
-              Cancel
-            </button>
+    <transition name="modal">
+      <div 
+        class="modal fade show" 
+        tabindex="-1" 
+        role="dialog"
+        v-if="modalVisability"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"> Do you want to by this car? </h5>
+              <button 
+                type="button" 
+                class="close" 
+                data-dismiss="modal" 
+                aria-label="Close"
+                @click="modalVisability = false"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <ul>
+                  <li>Model - <strong>{{ car.name }} {{ car.model }}</strong></li>
+                  <li>Year - <strong>{{ car.year }}</strong></li>
+                  <li>Owner - <strong>{{ car.owner }}</strong></li>  
+                </ul>
+            </div>
+            <div class="modal-footer">
+              <button 
+                type="button" 
+                class="btn btn-primary"
+                @click="newOrder"
+              >
+                Buy
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-secondary" 
+                data-dismiss="modal"
+                @click="cancelOrder"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div 
-      class="modal-backdrop fade show" 
-      v-if="modalVisability">
-    </div>
+    </transition>
+    <transition name="fade">
+      <div 
+        class="modal-backdrop fade show" 
+        v-if="modalVisability">
+      </div>
+    </transition>
+    <!-- END MODAL WINDOW -->
+
   </div>
   
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
