@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="main.css">
   <title>Document</title>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="app">
     <div class="row">
       <h1>
           Car application
@@ -19,39 +20,64 @@
       <!-- COL - 1 -->
       <div class="col-md-3">
         <Form>
-          <input type="text" id="search" class="form-control mb-3" placeholder="Find your car" aria-label="Find your car">
+          <input 
+            type="text"
+            class="form-control mb-3"
+            placeholder="Find your car"
+            v-model="search"
+          >
           <ul class="list-group">
-              <li class="list-group-item">BMW X5</li>
-              <li class="list-group-item">Ford Focus</li>
-              <li class="list-group-item">Ford Mustang</li>
-              <li class="list-group-item">Tesla Model 3</li>
-              <li class="list-group-item">Volkswagen golf</li>
-            </ul>
+            <li 
+              v-for="(car, index) of filtredCars"
+              class="list-group-item pointer"
+              @click="selectCar(index)"
+              :class="{ 'active': selectedCarIndex === index }"
+            >
+              {{ car.name }} {{ car.model }}
+            </li>
+          </ul>
         </Form>
       </div>
 
       <!-- COL - 2 -->
       <div class="col-md-5">
-        <h3>BMW</h3>
-        <img src="./img/bmw-x5.png" class="img-fluid" alt="BMW X5">
+        <h3>{{ car.name }}</h3>
+        <img 
+          :src="car.image" 
+          :alt="car.name"
+          class="img-fluid"
+        >
+          
       </div>
 
       <!-- COL - 3 -->
       <div class="col-md-4">
         <h3>Car details</h3>
         <ul>
-          <li>Model - <strong>X5</strong></li>
-          <li>Year - <strong>2017</strong></li>
-          <li>Owner - <strong>Max</strong></li>
-          <p>8 (800) 555-35-35</p>
+          <li>Model - <strong>{{ car.model }}</strong></li>
+          <li>Year - <strong>{{ car.year }}</strong></li>
+          <li>Owner - <strong>{{ car.owner }}</strong></li>  
         </ul>
-        <button type="button" class="btn btn-outline-info">Show phone</button>
-        <button type="button" class="btn btn-outline-success">Buy</button>
+        
+        <!-- Phone block -->
+        <div class="phone-block">
+          <p v-if="phoneVisibility">8 (800) 555-35-35</p>
+        </div>
 
+        <!-- Buttons -->
+        <button 
+          type="button" 
+          class="btn btn-outline-info" 
+          @click="phoneVisibility = !phoneVisibility"
+        >
+          {{ phoneBtnText }}
+        </button>
+        <button type="button" class="btn btn-outline-success">Buy</button>
       </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>
