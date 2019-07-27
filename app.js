@@ -1,4 +1,5 @@
 const car = (name, model, year, owner, image) => ({name, model, year, owner, image})
+const log = (header, text, type, date = new Date()) => ({header, text, type, date})
 
 const cars = [
   car('BMW','X5',2017,'Max','./img/bmw-x5.png'),
@@ -14,7 +15,7 @@ new Vue({
     cars: cars,
     selectedCarIndex: 0,
     car: cars[0],
-    logs: [1],
+    logs: [],
     phoneVisibility: false,
     search: '',
     modalVisability: false
@@ -28,9 +29,15 @@ new Vue({
     },
     newOrder () {
       this.modalVisability = false
+      this.logs.push(
+        log('Sucsess order', `${this.car.name} - ${this.car.model}`, 'ok')
+      )
     },
     cancelOrder () {
       this.modalVisability = false
+      this.logs.push(
+        log('Cancelled order', `${this.car.name} - ${this.car.model}`, 'cnl')
+      )
     }
   },
   computed : {
@@ -41,6 +48,23 @@ new Vue({
       return this.cars.filter(car => {
         return ~car.name.toLowerCase().indexOf(this.search) || ~car.model.toLowerCase().indexOf(this.search)
       })
+    },
+    filters: {
+      date(value) {
+        var options = {
+          era: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          weekday: 'long',
+          timezone: 'UTC',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric'
+        };
+
+        return value.toLocaleString("ru", options)
+      }
     }
   }
 })
